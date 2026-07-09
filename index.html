@@ -312,6 +312,10 @@
     animation: none;
     background: rgba(0,0,0,0.2);
   }
+  .submit-btn.success {
+    background: linear-gradient(135deg, var(--success), #27ae60);
+    box-shadow: 0 8px 30px rgba(46,204,113,0.4);
+  }
   .btn-subtext {
     text-align: center;
     font-size: 12px;
@@ -495,140 +499,44 @@
     transform: translateY(0);
   }
 
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s;
-  }
-  .modal-overlay.show { opacity: 1; pointer-events: all; }
-  .modal {
-    background: linear-gradient(135deg, #1a2f3d, #0d2137);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 24px;
-    padding: 40px;
-    max-width: 480px;
-    width: 90%;
-    text-align: center;
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-  }
-  .modal-overlay.show .modal { transform: scale(1) translateY(0); }
-  .modal-icon {
-    width: 70px; height: 70px;
-    background: linear-gradient(135deg, var(--success), #27ae60);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 32px;
-    box-shadow: 0 10px 30px rgba(46,204,113,0.3);
-    animation: modal-pop 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  @keyframes modal-pop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-  .modal h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
-  .modal p { color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
-
-  .zoom-box {
-    background: rgba(52,152,219,0.08);
-    border: 1px solid rgba(52,152,219,0.25);
+  /* Inline success message */
+  .success-banner {
+    background: linear-gradient(135deg, rgba(46,204,113,0.15), rgba(46,204,113,0.05));
+    border: 1px solid rgba(46,204,113,0.3);
     border-radius: 14px;
-    padding: 18px;
-    margin: 18px 0;
-    text-align: left;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    display: none;
+    animation: bannerSlide 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .zoom-box-title {
-    font-size: 13px;
+  .success-banner.show { display: block; }
+  @keyframes bannerSlide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .success-banner .banner-title {
+    color: var(--success);
+    font-size: 16px;
     font-weight: 800;
-    color: #3498db;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
-    text-align: center;
+    margin-bottom: 6px;
   }
-  .zoom-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
+  .success-banner .banner-text {
     color: #c8dde8;
-    line-height: 1.5;
-  }
-  .zoom-row:last-child { margin-bottom: 0; }
-  .zoom-row .zoom-label {
-    color: #5a7a8a;
-    font-weight: 700;
-    min-width: 90px;
-    flex-shrink: 0;
-  }
-  .zoom-row a {
-    color: #3498db;
-    text-decoration: none;
-    word-break: break-all;
-  }
-  .zoom-row a:hover { text-decoration: underline; }
-
-  .no-show-notice {
-    background: rgba(231,76,60,0.08);
-    border: 1px solid rgba(231,76,60,0.2);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin: 16px 0;
-    font-size: 13px;
-    color: #ff9f9f;
+    font-size: 14px;
     line-height: 1.6;
   }
-  .no-show-notice strong {
-    color: #fff;
-    font-weight: 700;
-  }
 
-  .modal-btn {
-    background: linear-gradient(135deg, var(--success), #27ae60);
-    color: #fff;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.3s;
-    margin-top: 8px;
-  }
-  .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(46,204,113,0.3); }
-
-  .refer-again-btn {
-    background: transparent;
-    border: 2px solid rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 12px 28px;
-    border-radius: 10px;
-    font-weight: 700;
+  /* Referral counter */
+  .referral-counter {
+    text-align: center;
+    margin-bottom: 20px;
     font-size: 14px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.3s;
-    margin-top: 12px;
-    margin-left: 10px;
+    color: var(--text-muted);
   }
-  .refer-again-btn:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.35);
+  .referral-counter .count {
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 18px;
   }
 
   .toast {
@@ -667,14 +575,10 @@
     .subheadline { font-size: 15px; }
     .section { padding: 20px; }
     body { padding: 12px; }
-    .modal { padding: 28px 20px; }
     .date-btn { padding: 14px 8px; font-size: 13px; }
     .date-btn .day-label { font-size: 16px; }
-    .zoom-row { flex-direction: column; gap: 2px; }
-    .zoom-row .zoom-label { min-width: auto; }
   }
 </style>
-<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -759,6 +663,17 @@
     <div class="pill">✓ No Timeshare</div>
     <div class="pill">✓ No Purchase Required</div>
     <div class="pill">✓ 18–24 Month Validity</div>
+  </div>
+
+  <!-- Referral Counter -->
+  <div class="referral-counter reveal" id="referral-counter" style="display:none;">
+    <span class="count" id="referral-count">0</span> referral(s) submitted this session
+  </div>
+
+  <!-- Success Banner -->
+  <div class="success-banner" id="success-banner">
+    <div class="banner-title">✅ Referral Submitted Successfully!</div>
+    <div class="banner-text">We'll reach out to confirm their seat. You can submit another referral below.</div>
   </div>
 
   <!-- Referral Form -->
@@ -891,40 +806,6 @@
 
 </div>
 
-<!-- Success Modal -->
-<div class="modal-overlay" id="success-modal">
-  <div class="modal">
-    <div class="modal-icon">✓</div>
-    <h3>Referral Submitted!</h3>
-    <p>Thank you for referring someone. We'll reach out to them to confirm their seat.</p>
-
-    <div class="no-show-notice">
-      <strong>⚠️ Please remind them:</strong> We will exclusively reserve this spot for them. A no-show may affect their eligibility to participate in future sessions. They should mark their calendar and join us at the selected time.
-    </div>
-
-    <div class="zoom-box">
-      <div class="zoom-box-title">📹 Zoom Details for Your Referral</div>
-      <div class="zoom-row">
-        <span class="zoom-label">🌐 Link:</span>
-        <a href="https://zoom.us/j/8088001202" target="_blank">https://zoom.us/j/8088001202</a>
-      </div>
-      <div class="zoom-row">
-        <span class="zoom-label">🔒 Passcode:</span>
-        <span>8080</span>
-      </div>
-      <div class="zoom-row">
-        <span class="zoom-label">🆔 Meeting ID:</span>
-        <span>8088 0012 02</span>
-      </div>
-    </div>
-
-    <div style="margin-top:8px;">
-      <button class="modal-btn" onclick="closeModal()">Got It</button>
-      <button class="refer-again-btn" onclick="referAnother()">Refer Another →</button>
-    </div>
-  </div>
-</div>
-
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
@@ -945,6 +826,7 @@
 
   let selectedDate = null;
   let todayAvailable = false;
+  let referralCount = 0;
 
   function getETNow() {
     const now = new Date();
@@ -1092,19 +974,37 @@
     setTimeout(() => toast.classList.remove('show'), 4000);
   }
 
-  function showModal() {
-    document.getElementById('success-modal').classList.add('show');
-  }
-  function closeModal() {
-    document.getElementById('success-modal').classList.remove('show');
+  function showSuccess() {
+    referralCount++;
+    const counter = document.getElementById('referral-counter');
+    const countEl = document.getElementById('referral-count');
+    const banner = document.getElementById('success-banner');
+    
+    countEl.textContent = referralCount;
+    counter.style.display = 'block';
+    banner.classList.add('show');
+    
+    // Auto-hide banner after 5 seconds
+    setTimeout(() => {
+      banner.classList.remove('show');
+    }, 5000);
   }
 
-  function referAnother() {
-    closeModal();
-    document.getElementById('referral-form').reset();
+  function resetForm() {
+    const form = document.getElementById('referral-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    
+    form.reset();
+    submitBtn.classList.remove('success');
+    btnText.textContent = 'Submit Referral →';
+    
+    // Reset calendar
     initCalendar();
     document.getElementById('time-select').innerHTML = '<option value="" disabled selected>Select time zone first...</option>';
-    window.scrollTo({ top: document.getElementById('form-section').offsetTop - 20, behavior: 'smooth' });
+    
+    // Scroll to form
+    document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // ===================== FORM HANDLING =====================
@@ -1130,7 +1030,7 @@
     }
 
     submitBtn.classList.add('loading');
-    btnText.innerHTML = '<span class="spinner"></span> Processing...';
+    btnText.innerHTML = '<span class="spinner"></span> Submitting...';
 
     const formData = new FormData(form);
 
@@ -1142,19 +1042,22 @@
       });
 
       if (response.ok) {
-        showModal();
-        // Form stays filled until they click "Refer Another" or "Got It"
+        // Show success and reset for next referral
+        showSuccess();
+        resetForm();
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Formspree error:', response.status, errorData);
-        throw new Error(`Formspree returned ${response.status}`);
+        throw new Error(`Formspree returned ${response.status}: ${JSON.stringify(errorData)}`);
       }
     } catch (err) {
       showToast('Submission failed. Please check your connection and try again.');
       console.error(err);
     } finally {
       submitBtn.classList.remove('loading');
-      btnText.textContent = 'Submit Referral →';
+      if (!submitBtn.classList.contains('success')) {
+        btnText.textContent = 'Submit Referral →';
+      }
     }
   });
 
