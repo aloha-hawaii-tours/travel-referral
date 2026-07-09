@@ -526,7 +526,6 @@
     line-height: 1.6;
   }
 
-  /* Referral counter */
   .referral-counter {
     text-align: center;
     margin-bottom: 20px;
@@ -680,8 +679,8 @@
   <div class="section reveal" id="form-section">
     <div class="section-title"><span class="icon">📝</span> Refer Someone Today</div>
 
-    <!-- TODO: Replace with your NEW Formspree endpoint URL -->
-    <form id="referral-form" action="https://formspree.io/f/https://formspree.io/f/maqggola" method="POST">
+    <!-- IMPORTANT: Replace YOUR_FORM_ID with your actual Formspree form ID -->
+    <form id="referral-form" action="https://formspree.io/f/maqgbola" method="POST">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <input type="hidden" name="_subject" value="New Referral Submission">
 
@@ -810,6 +809,11 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // ===================== CONFIG =====================
+  // Replace with your actual Formspree form ID
+  const FORMSPREE_ID = 'maqgbola';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/' + FORMSPREE_ID;
+
   // ===================== TIMEZONE & CALENDAR LOGIC =====================
   const TIMEZONE_OFFSETS = {
     'ET': -4,
@@ -984,7 +988,6 @@
     counter.style.display = 'block';
     banner.classList.add('show');
     
-    // Auto-hide banner after 5 seconds
     setTimeout(() => {
       banner.classList.remove('show');
     }, 5000);
@@ -999,11 +1002,9 @@
     submitBtn.classList.remove('success');
     btnText.textContent = 'Submit Referral →';
     
-    // Reset calendar
     initCalendar();
     document.getElementById('time-select').innerHTML = '<option value="" disabled selected>Select time zone first...</option>';
     
-    // Scroll to form
     document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -1011,6 +1012,9 @@
   const form = document.getElementById('referral-form');
   const submitBtn = document.getElementById('submit-btn');
   const btnText = document.getElementById('btn-text');
+
+  // Update form action to use the config endpoint
+  form.action = FORMSPREE_ENDPOINT;
 
   document.getElementById('timezone-select').addEventListener('change', updateTimeSlots);
 
@@ -1035,24 +1039,27 @@
     const formData = new FormData(form);
 
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { 
+          'Accept': 'application/json',
+          'Origin': window.location.origin
+        },
+        mode: 'cors'
       });
 
       if (response.ok) {
-        // Show success and reset for next referral
         showSuccess();
         resetForm();
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Formspree error:', response.status, errorData);
-        throw new Error(`Formspree returned ${response.status}: ${JSON.stringify(errorData)}`);
+        throw new Error(`Formspree returned ${response.status}`);
       }
     } catch (err) {
       showToast('Submission failed. Please check your connection and try again.');
-      console.error(err);
+      console.error('Full error:', err);
     } finally {
       submitBtn.classList.remove('loading');
       if (!submitBtn.classList.contains('success')) {
